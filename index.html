@@ -6,156 +6,222 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            margin: 0;
+            background: #0f172a;
+            color: white;
+        }
+
+        /* HEADER */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        header h1 {
+            font-size: 18px;
             margin: 0;
         }
 
+        .cta {
+            background: #4f46e5;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 50px 20px 20px;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #94a3b8;
+        }
+
+        /* CONTROLS */
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+
+        input, select {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 250px;
+        }
+
+        /* GRID */
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: auto;
             padding: 20px;
         }
 
-        h1 {
-            text-align: center;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
         }
 
         .project {
-            background-color: white;
+            background: #1e293b;
             padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+            background: #273449;
         }
 
         .project h2 {
             margin-top: 0;
+            font-size: 18px;
+        }
+
+        .meta {
+            font-size: 12px;
+            color: #94a3b8;
         }
 
         .section-title {
-            margin-top: 30px;
+            margin: 30px 0 10px;
+            color: #cbd5e1;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
-
 </head>
+
 <body>
+
+<header>
+    <h1>🚀 CodeVault</h1>
+    <a class="cta" href="#">Get Started</a>
+</header>
+
+<div class="hero">
+    <h2>Your Coding Idea Engine</h2>
+    <p>100+ project ideas to level up your programming skills</p>
+</div>
+
+<div class="controls">
+    <input type="text" id="search" placeholder="Search projects...">
+
+    <select id="difficulty">
+        <option value="all">All Difficulties</option>
+        <option value="2">Easy (1-3)</option>
+        <option value="4">Medium (4-6)</option>
+        <option value="7">Hard (7+)</option>
+    </select>
+
+    <select id="language">
+        <option value="all">All Languages</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="HTML">HTML/CSS</option>
+    </select>
+</div>
 
 <div class="container">
 
-<h1>Top 100 Coding Project Ideas</h1>
+    <div class="grid" id="projectList">
 
-<p>This list contains 100 coding project ideas ranked by difficulty. Perfect for beginners learning programming and building real skills.</p>
+        <div class="project" data-difficulty="2" data-language="JavaScript">
+            <h2>Calculator</h2>
+            <p class="meta">JavaScript • Difficulty 2/10</p>
+        </div>
 
-<h2 class="section-title">🟢 Beginner Projects</h2>
+        <div class="project" data-difficulty="2" data-language="JavaScript">
+            <h2>To-Do List App</h2>
+            <p class="meta">JavaScript • Difficulty 2/10</p>
+        </div>
 
-<div class="project">
-    <h2>#1 Calculator</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 2/10</p>
-    <p>Practice basic math logic and UI handling.</p>
+        <div class="project" data-difficulty="5" data-language="JavaScript">
+            <h2>Weather App</h2>
+            <p class="meta">JavaScript • Difficulty 5/10</p>
+        </div>
+
+        <div class="project" data-difficulty="4" data-language="HTML">
+            <h2>Blog Layout</h2>
+            <p class="meta">HTML/CSS • Difficulty 3/10</p>
+        </div>
+
+        <div class="project" data-difficulty="3" data-language="JavaScript">
+            <h2>Clicker Game</h2>
+            <p class="meta">JavaScript • Difficulty 3/10</p>
+        </div>
+
+        <div class="project" data-difficulty="4" data-language="JavaScript">
+            <h2>Loot Box Simulator</h2>
+            <p class="meta">JavaScript • Difficulty 4/10</p>
+        </div>
+
+    </div>
 </div>
 
-<div class="project">
-    <h2>#2 To-Do List App</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 2/10</p>
-    <p>Practice DOM manipulation and updating content dynamically.</p>
-</div>
+<script>
+const search = document.getElementById("search");
+const difficulty = document.getElementById("difficulty");
+const language = document.getElementById("language");
+const projects = document.querySelectorAll(".project");
 
-<div class="project">
-    <h2>#3 Number Guessing Game</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 2/10</p>
-    <p>Practice conditions, loops and random number generation.</p>
-</div>
+function filterProjects() {
+    const searchValue = search.value.toLowerCase();
+    const diffValue = difficulty.value;
+    const langValue = language.value;
 
-<div class="project">
-    <h2>#4 Password Generator</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 3/10</p>
-    <p>Practice randomness, strings and user preferences.</p>
-</div>
+    projects.forEach(p => {
+        const title = p.querySelector("h2").innerText.toLowerCase();
+        const diff = parseInt(p.dataset.difficulty);
+        const lang = p.dataset.language;
 
-<div class="project">
-    <h2>#5 Quiz App</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 4/10</p>
-    <p>Practice with arrays, objects and user interaction.</p>
-</div>
+        let matchSearch = title.includes(searchValue);
+        let matchDiff = diffValue === "all" ||
+            (diffValue === "2" && diff <= 3) ||
+            (diffValue === "4" && diff <= 6) ||
+            (diffValue === "7" && diff >= 7);
 
-<h2 class="section-title">🟡 Intermediate Projects</h2>
+        let matchLang = langValue === "all" || lang === langValue;
 
-<div class="project">
-    <h2>#6 Weather App</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 5/10</p>
-    <p>Practice how to use APIs and handle real-world data.</p>
-</div>
+        if (matchSearch && matchDiff && matchLang) {
+            p.classList.remove("hidden");
+        } else {
+            p.classList.add("hidden");
+        }
+    });
+}
 
-<div class="project">
-    <h2>#7 Notes App (with saving)</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 5/10</p>
-    <p>Practice local storage and saving user data.</p>
-</div>
-
-<div class="project">
-    <h2>#8 Stopwatch / Timer</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 3/10</p>
-    <p>Practice time functions and intervals.</p>
-</div>
-
-<div class="project">
-    <h2>#9 Random Quote Generator</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 2/10</p>
-    <p>Practice arrays and displaying random content.</p>
-</div>
-
-<div class="project">
-    <h2>#10 Image Gallery</h2>
-    <p>Language: HTML, CSS, and JavaScript</p>
-    <p>Difficulty: 4/10</p>
-    <p>Practice layout design and interactive UI elements.</p>
-</div>
-
-<div class="project">
-    <h2>#11 Simple Clicker Game</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 3/10</p>
-    <p>Practice game loops and incremental systems.</p>
-</div>
-
-<div class="project">
-    <h2>#12 Basic Blog Layout</h2>
-    <p>Language: HTML, CSS</p>
-    <p>Difficulty: 3/10</p>
-    <p>Practice structure and layout design for real websites.</p>
-</div>
-
-<div class="project">
-    <h2>#13 Login Form (Frontend Only)</h2>
-    <p>Language: HTML, CSS, and JavaScript</p>
-    <p>Difficulty: 4/10</p>
-    <p>Practice form validation and user input handling.</p>
-</div>
-
-<div class="project">
-    <h2>#14 Music Player</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 5/10</p>
-    <p>Practice media controls and event handling.</p>
-</div>
-
-<div class="project">
-    <h2>#15 Loot Box Simulator</h2>
-    <p>Language: JavaScript</p>
-    <p>Difficulty: 4/10</p>
-    <p>Practice probability systems and random rewards.</p>
-</div>
-
-</div>
+search.addEventListener("input", filterProjects);
+difficulty.addEventListener("change", filterProjects);
+language.addEventListener("change", filterProjects);
+</script>
 
 </body>
 </html>
